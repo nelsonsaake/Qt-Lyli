@@ -1,0 +1,554 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>936</width>
+    <height>687</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>630</width>
+    <height>494</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Lyli File Recovery</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="resources.qrc">
+    <normaloff>:/resources/Logo400.png</normaloff>:/resources/Logo400.png</iconset>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QWidget, QPushButton{
+background: rgb(61, 94, 168);
+font: 16pt &quot;Pompiere &quot;;
+color: white;
+margin: 0;
+}
+
+QWidget[objectName=&quot;centralwidget&quot;]{
+background-image: url(:/resources/bg1920.png);
+background: rgb(61, 94, 168);
+}
+
+[objectName=&quot;stackedWidget&quot;]{
+background-color: rgba(61, 94, 168, 0);
+}
+
+QListWidget{
+border: 0;
+min-width: 100px;
+}
+
+QLineEdit{
+border: 1px solid silver;
+padding: 5px 5px 5px 15px;
+}
+
+QPushButton{
+border: 0;
+padding: 0;
+background: rgb(61, 94, 168);
+text-decoration: underline;
+}
+
+QPushButton:hover{
+text-decoration: none;
+}
+
+QPushButton:pressed{
+/*font: 18pt;*/
+}
+
+QStatusBar{
+font: 14pt &quot;Pompiere &quot;;
+color: rgb(64, 65, 66);
+}
+
+QHeaderView::section{
+background-color: rgba(0,0,0,0.5);
+padding: 5px 15px;
+min-width: 95px;
+}
+
+QListView, QTableView {
+border: 0;
+}
+
+QLabel{
+min-height: 100px;
+min-width: 200px;
+}</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout_2">
+    <item>
+     <widget class="QStackedWidget" name="stackedWidget">
+      <property name="currentIndex">
+       <number>1</number>
+      </property>
+      <widget class="QWidget" name="focusMode">
+       <layout class="QHBoxLayout" name="horizontalLayout_5">
+        <item>
+         <widget class="QListWidget" name="filesListWidget">
+          <property name="verticalScrollBarPolicy">
+           <enum>Qt::ScrollBarAlwaysOff</enum>
+          </property>
+          <property name="horizontalScrollBarPolicy">
+           <enum>Qt::ScrollBarAlwaysOff</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QFrame" name="actionArea">
+          <property name="styleSheet">
+           <string notr="true"/>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::StyledPanel</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Raised</enum>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout">
+           <item>
+            <spacer name="verticalSpacer_2">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
+            <widget class="QLabel" name="loaderAnimationlabel">
+             <property name="minimumSize">
+              <size>
+               <width>200</width>
+               <height>100</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true"/>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="textFormat">
+              <enum>Qt::AutoText</enum>
+             </property>
+             <property name="pixmap">
+              <pixmap resource="resources.qrc">:/resources/loader356.gif</pixmap>
+             </property>
+             <property name="scaledContents">
+              <bool>true</bool>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QWidget" name="actionAreaRow1" native="true">
+             <property name="styleSheet">
+              <string notr="true">QWidget, QPushButton{
+background: white, rgb(61, 94, 168);
+padding: 0;
+margin: 0;
+color: white;
+}
+
+</string>
+             </property>
+             <layout class="QHBoxLayout" name="horizontalLayout_2">
+              <item>
+               <widget class="QLineEdit" name="rootDirLineEdit">
+                <property name="toolTip">
+                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This folder and all it's sub folders would be searched for .lyli files. If found they would be worked on.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true"/>
+                </property>
+                <property name="dragEnabled">
+                 <bool>true</bool>
+                </property>
+                <property name="placeholderText">
+                 <string>Enter folder to be search</string>
+                </property>
+                <property name="cursorMoveStyle">
+                 <enum>Qt::VisualMoveStyle</enum>
+                </property>
+                <property name="clearButtonEnabled">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="browsePushButton">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>26</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>95</width>
+                  <height>26</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QPushButton{
+background-color: rgba(0,0,0,0.5);
+color: white;
+padding: 4px 0px;
+text-decoration: none;
+max-width: 95px;
+}
+
+QPushButton:hover{
+text-decoration: underline;
+}
+
+QPushButton:pressed{
+padding: 4px 15px 2px 15px;
+font-size: 14pt;
+}</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="icon">
+                 <iconset resource="resources.qrc">
+                  <normaloff>:/resources/ic_more_horiz_white_48dp.png</normaloff>:/resources/ic_more_horiz_white_48dp.png</iconset>
+                </property>
+                <property name="iconSize">
+                 <size>
+                  <width>20</width>
+                  <height>20</height>
+                 </size>
+                </property>
+                <property name="autoDefault">
+                 <bool>false</bool>
+                </property>
+                <property name="default">
+                 <bool>false</bool>
+                </property>
+                <property name="flat">
+                 <bool>false</bool>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QWidget" name="actionAreaRow2" native="true">
+             <property name="styleSheet">
+              <string notr="true">QPushButton{
+color: white;
+padding: 3px 15px;
+text-decoration: none;
+max-width: 95px;
+}
+
+QPushButton:hover{
+text-decoration: underline;
+}
+
+QPushButton:pressed{
+padding: 4px 15px 2px 15px;
+font-size: 14pt;
+}</string>
+             </property>
+             <layout class="QHBoxLayout" name="horizontalLayout_3">
+              <item>
+               <widget class="QPushButton" name="scanPushButton">
+                <property name="maximumSize">
+                 <size>
+                  <width>129</width>
+                  <height>60</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QPushButton{
+background-color: rgba(150, 150, 150, 0.1);
+border: 2px solid rgba(0, 0, 0, 0.3);
+}
+
+QPushButton{
+background-color: white;
+color: black;
+}</string>
+                </property>
+                <property name="text">
+                 <string>Scan</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="resources.qrc">
+                  <normaloff>:/resources/ic_search_black_48dp.png</normaloff>:/resources/ic_search_black_48dp.png</iconset>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="expertModeScanPushButton">
+                <property name="styleSheet">
+                 <string notr="true">QPushButton{
+background-color: rgba(150, 150, 150, 0.1);
+border: 2px solid rgba(0, 0, 0, 0.3);
+}
+
+QPushButton{
+background-color: white;
+color: black;
+}</string>
+                </property>
+                <property name="text">
+                 <string>Scan</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="resources.qrc">
+                  <normaloff>:/resources/ic_search_black_48dp.png</normaloff>:/resources/ic_search_black_48dp.png</iconset>
+                </property>
+                <property name="iconSize">
+                 <size>
+                  <width>16</width>
+                  <height>16</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="cancelPushButton">
+                <property name="enabled">
+                 <bool>true</bool>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QPushButton{
+background-color: rgb(180, 47, 29);
+border: 2px solid rgb(162, 47, 29);
+}
+
+</string>
+                </property>
+                <property name="text">
+                 <string>Cancel</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="resources.qrc">
+                  <normaloff>:/resources/ic_clear_white_48dp.png</normaloff>:/resources/ic_clear_white_48dp.png</iconset>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QWidget" name="userModeSelectionArea" native="true">
+             <layout class="QHBoxLayout" name="horizontalLayout_4">
+              <item>
+               <spacer name="horizontalSpacer_3">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QPushButton" name="expertModePushButton">
+                <property name="styleSheet">
+                 <string notr="true">font-size: 14pt;
+color: silver;
+padding: 3px;</string>
+                </property>
+                <property name="text">
+                 <string>Expert Mode</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="resources.qrc">
+                  <normaloff>:/resources/ic_bubble_chart_white_48dp.png</normaloff>:/resources/ic_bubble_chart_white_48dp.png</iconset>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="simpleInterfacePushButton">
+                <property name="styleSheet">
+                 <string notr="true">font-size: 14pt;
+color: silver;
+padding: 3px;</string>
+                </property>
+                <property name="text">
+                 <string>Simple Interface</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="resources.qrc">
+                  <normaloff>:/resources/ic_fiber_manual_record_white_48dp.png</normaloff>:/resources/ic_fiber_manual_record_white_48dp.png</iconset>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <spacer name="verticalSpacer">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QListWidget" name="foldersListWidget">
+          <property name="verticalScrollBarPolicy">
+           <enum>Qt::ScrollBarAlwaysOff</enum>
+          </property>
+          <property name="horizontalScrollBarPolicy">
+           <enum>Qt::ScrollBarAlwaysOff</enum>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="finishCelebrationView">
+       <layout class="QGridLayout" name="gridLayout_2">
+        <item row="2" column="1">
+         <widget class="QWidget" name="widget" native="true">
+          <layout class="QVBoxLayout" name="verticalLayout_3">
+           <item>
+            <spacer name="verticalSpacer_3">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QLabel" name="scanCompletedLabel">
+             <property name="styleSheet">
+              <string notr="true">font-size: 24px;</string>
+             </property>
+             <property name="text">
+              <string>TextLabel</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="verticalSpacer_5">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeType">
+              <enum>QSizePolicy::Minimum</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item alignment="Qt::AlignRight">
+            <widget class="QPushButton" name="runAnotherScanButton">
+             <property name="styleSheet">
+              <string notr="true">font-size: 14pt;
+color: silver;
+padding: 3px;</string>
+             </property>
+             <property name="text">
+              <string>Run another scan</string>
+             </property>
+             <property name="icon">
+              <iconset resource="resources.qrc">
+               <normaloff>:/resources/ic_arrow_back_white_48dp.png</normaloff>:/resources/ic_arrow_back_white_48dp.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="verticalSpacer_4">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <spacer name="horizontalSpacer">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="2" column="2">
+         <spacer name="horizontalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+ </widget>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
+ <connections/>
+</ui>

@@ -1,0 +1,35 @@
+#ifndef FINISHCHECKER_H
+#define FINISHCHECKER_H
+
+
+class FinishChecker
+{
+public:
+    FinishChecker()
+    {
+        firstPass = false;
+        secondPass = false;
+        thirdPass = false;
+    }
+    
+    void anotherPass(){
+        if(!firstPass){
+            firstPass = true;
+        }else if(!secondPass){
+            secondPass = true;
+        }else if(!thirdPass){
+            thirdPass = true;
+        }
+    }
+    
+    bool isFinished(){
+        return firstPass & secondPass & thirdPass;
+    }
+    
+private:
+    bool firstPass;
+    bool secondPass;
+    bool thirdPass;
+};
+
+#endif // FINISHCHECKER_H
