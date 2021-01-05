@@ -12,35 +12,19 @@ class CountUpAnimation: public QObject
 {
     Q_OBJECT
 public:
-    CountUpAnimation(int duration = 1000, int count=100, int step=1)
-        : count(count), step(step), ticker(duration, count/step)
-    {
-        connect(&ticker,
-                &Ticker::ticked,
-                this,
-                &CountUpAnimation::CountUp);
-    }
+    CountUpAnimation(int duration = 1000, int count=100, int step=1);
 
-    void setCount(int count){
-        this->count = count;
-    }
+    void setCount(int count);
 
 public slots:
-    void startAnimation(){
-        ticker.forward();
-        emit started();
-    }
+    void startAnimation();
 
 private slots:
-    void CountUp(int tickCount){
-        QString txt = QString::number(tickCount*step);
-        if(tickCount<=count) emit nextState(txt);
-        else emit finished();
-    }
+    void CountUp(int tickCount);
 
 signals:
     void started();
-    void nextState(QString nxt);
+    void update(QString nxt);
     void finished();
 
 private:

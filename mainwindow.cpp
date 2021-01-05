@@ -76,7 +76,7 @@ void MainWindow::startLiveGif()
     // heart beat is the spinning animation
     // it to show the user the program is live
 
-    QString fileName = ":/resources/loader356.gif";
+    QString fileName = ":/resources/loader_white.gif";
     liveGif = new QMovie;
     liveGif->setFileName(fileName);
     liveGifLabel->setMovie(liveGif);

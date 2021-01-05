@@ -1,16 +1,20 @@
 <RCC>
     <qresource prefix="/">
-        <file>resources/loader356.gif</file>
-        <file>resources/bg4mp.jpg</file>
-        <file>resources/bg1920.png</file>
         <file>resources/ic_search_white_48dp.png</file>
         <file>resources/ic_more_horiz_white_48dp.png</file>
         <file>resources/ic_clear_white_48dp.png</file>
         <file>resources/ic_bubble_chart_white_48dp.png</file>
         <file>resources/ic_album_white_48dp.png</file>
         <file>resources/ic_fiber_manual_record_white_48dp.png</file>
-        <file>resources/ic_search_black_48dp.png</file>
         <file>resources/ic_arrow_back_white_48dp.png</file>
         <file>resources/Logo400.png</file>
+        <file>resources/bkg1.jpg</file>
+        <file>resources/bkg2.jpg</file>
+        <file>resources/bkg3.jpg</file>
+        <file>resources/ic_search_black_48dp.png</file>
+        <file>resources/ic_bubble_chart_black_48dp.png</file>
+        <file>resources/ic_fiber_manual_record_black_48dp.png</file>
+        <file>resources/ic_arrow_back_black_48dp.png</file>
+        <file>resources/loader_white.gif</file>
     </qresource>
 </RCC>

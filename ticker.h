@@ -12,84 +12,28 @@ class Ticker: public QObject
 {
     Q_OBJECT
 public:
-    Ticker(int duration=100, int value=1, int delay=0)
-        : duration(duration), value(value), delay(delay){
+    Ticker(int duration=100, int value=1, int delay=0);
 
-        tickCount = 0;
-        foreverTickMode = false;
-        foreverTickStopped = false;
-        foreverModeTickInterval = 100;
+    void setDuration(int value);
 
-        connect(&timer,
-                &QTimer::timeout,
-                this,
-                &Ticker::tick);
-    }
+    void setValue(int value);
 
-    void setDuration(int value)
-    {
-        duration = value;
-    }
-
-    void setValue(int value)
-    {
-        this->value = value;
-    }
-
-    void setTickInterval(int value){
-        if(foreverModeTickInterval<100) return;
-        foreverModeTickInterval = value;
-    }
+    void setTickInterval(int value);
 
 protected:
-    int tickInterval(){
-        if(duration==0 || value==0) return 0;
-        return duration/value;
-    }
+    int tickInterval();
 
-    void startTicking(){
-        // the first tick will increment the value
-        // and emit it
-        // => tick count will start at '0'
-        tickCount = -1;
-
-        if(delay>0) timer.start(delay);
-        else tick();
-    }
+    void startTicking();
 
 private slots:
-    void tick(){
-        tickCount++;
-        emit ticked(tickCount);
-
-        if(foreverTickMode){
-            if(!foreverTickStopped){
-                timer.start(foreverModeTickInterval);
-            }
-        } else{
-            if(tickCount*tickInterval()<duration){
-                int msec = tickInterval();
-                timer.start(msec);
-            }
-        }
-    }
+    void tick();
 
 public slots:
-    void forward(){
-        if(duration==0||value==0) return;
-        foreverTickMode = false;
-        startTicking();
-    }
+    void forward();
 
-    void start(){
-        foreverTickMode = true;
-        foreverTickStopped = false;
-        startTicking();
-    }
+    void start();
 
-    void stop(){
-        foreverTickStopped = true;
-    }
+    void stop();
 
 signals:
     void ticked(int);

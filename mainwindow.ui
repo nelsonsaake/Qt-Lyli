@@ -25,19 +25,17 @@
   </property>
   <property name="styleSheet">
    <string notr="true">QWidget, QPushButton{
-background: rgb(61, 94, 168);
+background: rgba(61, 94, 168, 0);
 font: 16pt &quot;Pompiere &quot;;
-color: white;
+color: rgb(64, 65, 66);
 margin: 0;
 }
 
 QWidget[objectName=&quot;centralwidget&quot;]{
-background-image: url(:/resources/bg1920.png);
-background: rgb(61, 94, 168);
-}
-
-[objectName=&quot;stackedWidget&quot;]{
-background-color: rgba(61, 94, 168, 0);
+background-color: rgb(61, 94, 168);
+background: url(:/resources/bkg1.jpg);
+background-size: cover;
+background-repeat: no repeat;
 }
 
 QListWidget{
@@ -46,28 +44,30 @@ min-width: 100px;
 }
 
 QLineEdit{
-border: 1px solid silver;
+border: 1px solid grey;
 padding: 5px 5px 5px 15px;
 }
 
 QPushButton{
-border: 0;
-padding: 0;
-background: rgb(61, 94, 168);
-text-decoration: underline;
+padding: 3px 15px;
+text-decoration: none;
+border-radius: 18px;
+max-width: 150px;
 }
 
 QPushButton:hover{
-text-decoration: none;
+text-decoration: underline;
 }
 
 QPushButton:pressed{
-/*font: 18pt;*/
+padding: 4px 15px 2px 15px;
+font-size: 14pt;
 }
 
 QStatusBar{
 font: 14pt &quot;Pompiere &quot;;
 color: rgb(64, 65, 66);
+background-color: white;
 }
 
 QHeaderView::section{
@@ -90,7 +90,7 @@ min-width: 200px;
     <item>
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="focusMode">
        <layout class="QHBoxLayout" name="horizontalLayout_5">
@@ -133,8 +133,8 @@ min-width: 200px;
             <widget class="QLabel" name="loaderAnimationlabel">
              <property name="minimumSize">
               <size>
-               <width>200</width>
-               <height>100</height>
+               <width>350</width>
+               <height>350</height>
               </size>
              </property>
              <property name="maximumSize">
@@ -153,7 +153,7 @@ min-width: 200px;
               <enum>Qt::AutoText</enum>
              </property>
              <property name="pixmap">
-              <pixmap resource="resources.qrc">:/resources/loader356.gif</pixmap>
+              <pixmap resource="resources.qrc">:/resources/loader_white.gif</pixmap>
              </property>
              <property name="scaledContents">
               <bool>true</bool>
@@ -166,134 +166,150 @@ min-width: 200px;
            <item>
             <widget class="QWidget" name="actionAreaRow1" native="true">
              <property name="styleSheet">
-              <string notr="true">QWidget, QPushButton{
-background: white, rgb(61, 94, 168);
-padding: 0;
-margin: 0;
-color: white;
+              <string notr="true">QLineEdit, QPushButton{
+padding: 2px 15px;
+max-height: 55px;
+border: 2px solid grey;
 }
+
+
+
 
 </string>
              </property>
              <layout class="QHBoxLayout" name="horizontalLayout_2">
               <item>
-               <widget class="QLineEdit" name="rootDirLineEdit">
-                <property name="toolTip">
-                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This folder and all it's sub folders would be searched for .lyli files. If found they would be worked on.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               <layout class="QHBoxLayout" name="horizontalLayout">
+                <property name="spacing">
+                 <number>0</number>
                 </property>
-                <property name="styleSheet">
-                 <string notr="true"/>
+                <property name="sizeConstraint">
+                 <enum>QLayout::SetDefaultConstraint</enum>
                 </property>
-                <property name="dragEnabled">
-                 <bool>true</bool>
-                </property>
-                <property name="placeholderText">
-                 <string>Enter folder to be search</string>
-                </property>
-                <property name="cursorMoveStyle">
-                 <enum>Qt::VisualMoveStyle</enum>
-                </property>
-                <property name="clearButtonEnabled">
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QPushButton" name="browsePushButton">
-                <property name="minimumSize">
-                 <size>
-                  <width>0</width>
-                  <height>26</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>95</width>
-                  <height>26</height>
-                 </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">QPushButton{
-background-color: rgba(0,0,0,0.5);
-color: white;
-padding: 4px 0px;
-text-decoration: none;
+                <item>
+                 <widget class="QLineEdit" name="rootDirLineEdit">
+                  <property name="toolTip">
+                   <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This folder and all it's sub folders would be searched for .lyli files. If found they would be worked on.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">border-left-width: 5px;
+border-top-left-radius: 17px;
+border-bottom-left-radius: 17px;
+</string>
+                  </property>
+                  <property name="dragEnabled">
+                   <bool>true</bool>
+                  </property>
+                  <property name="placeholderText">
+                   <string>Enter folder to be search</string>
+                  </property>
+                  <property name="cursorMoveStyle">
+                   <enum>Qt::VisualMoveStyle</enum>
+                  </property>
+                  <property name="clearButtonEnabled">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="browsePushButton">
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>26</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>127</width>
+                    <height>63</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QPushButton{
+background-color: rgb(85, 133, 236);
 max-width: 95px;
-}
-
-QPushButton:hover{
-text-decoration: underline;
+border: 2px solid grey;
+border-left: 0;
 }
 
 QPushButton:pressed{
 padding: 4px 15px 2px 15px;
 font-size: 14pt;
-}</string>
-                </property>
-                <property name="text">
-                 <string/>
-                </property>
-                <property name="icon">
-                 <iconset resource="resources.qrc">
-                  <normaloff>:/resources/ic_more_horiz_white_48dp.png</normaloff>:/resources/ic_more_horiz_white_48dp.png</iconset>
-                </property>
-                <property name="iconSize">
-                 <size>
-                  <width>20</width>
-                  <height>20</height>
-                 </size>
-                </property>
-                <property name="autoDefault">
-                 <bool>false</bool>
-                </property>
-                <property name="default">
-                 <bool>false</bool>
-                </property>
-                <property name="flat">
-                 <bool>false</bool>
-                </property>
-               </widget>
+}
+
+QPushButton{
+border-radius: 0;
+border-top-right-radius: 5px;
+border-bottom-right-radius: 5px;
+}
+</string>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="resources.qrc">
+                    <normaloff>:/resources/ic_more_horiz_white_48dp.png</normaloff>:/resources/ic_more_horiz_white_48dp.png</iconset>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>20</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                  <property name="autoDefault">
+                   <bool>false</bool>
+                  </property>
+                  <property name="default">
+                   <bool>false</bool>
+                  </property>
+                  <property name="flat">
+                   <bool>false</bool>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
               </item>
              </layout>
             </widget>
            </item>
            <item>
+            <spacer name="verticalSpacer">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
             <widget class="QWidget" name="actionAreaRow2" native="true">
              <property name="styleSheet">
               <string notr="true">QPushButton{
-color: white;
-padding: 3px 15px;
-text-decoration: none;
-max-width: 95px;
+width: 130px;
+border: 3px solid grey;
+border-width: 2px 4px 2px 4px;
+color: rgb(20,20,20);
 }
-
-QPushButton:hover{
-text-decoration: underline;
-}
-
-QPushButton:pressed{
-padding: 4px 15px 2px 15px;
-font-size: 14pt;
-}</string>
+</string>
              </property>
              <layout class="QHBoxLayout" name="horizontalLayout_3">
               <item>
                <widget class="QPushButton" name="scanPushButton">
                 <property name="maximumSize">
                  <size>
-                  <width>129</width>
+                  <width>168</width>
                   <height>60</height>
                  </size>
                 </property>
                 <property name="styleSheet">
                  <string notr="true">QPushButton{
-background-color: rgba(150, 150, 150, 0.1);
-border: 2px solid rgba(0, 0, 0, 0.3);
-}
-
-QPushButton{
 background-color: white;
-color: black;
 }</string>
                 </property>
                 <property name="text">
@@ -309,13 +325,7 @@ color: black;
                <widget class="QPushButton" name="expertModeScanPushButton">
                 <property name="styleSheet">
                  <string notr="true">QPushButton{
-background-color: rgba(150, 150, 150, 0.1);
-border: 2px solid rgba(0, 0, 0, 0.3);
-}
-
-QPushButton{
 background-color: white;
-color: black;
 }</string>
                 </property>
                 <property name="text">
@@ -340,8 +350,9 @@ color: black;
                 </property>
                 <property name="styleSheet">
                  <string notr="true">QPushButton{
-background-color: rgb(180, 47, 29);
-border: 2px solid rgb(162, 47, 29);
+background-color: rgb(202, 52, 32);
+color: white;
+border-color: rgb(180, 47, 29);
 }
 
 </string>
@@ -359,7 +370,31 @@ border: 2px solid rgb(162, 47, 29);
             </widget>
            </item>
            <item>
+            <spacer name="verticalSpacer_6">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
             <widget class="QWidget" name="userModeSelectionArea" native="true">
+             <property name="styleSheet">
+              <string notr="true">QPushButton{
+width: 130px;
+border: 1px solid gray;
+border-width: 1px 4px;
+border-radius:  17px;
+background-color: rgba(255,255,255,0.4);
+color: rgb(20,20,20);
+}
+</string>
+             </property>
              <layout class="QHBoxLayout" name="horizontalLayout_4">
               <item>
                <spacer name="horizontalSpacer_3">
@@ -377,56 +412,42 @@ border: 2px solid rgb(162, 47, 29);
               <item>
                <widget class="QPushButton" name="expertModePushButton">
                 <property name="styleSheet">
-                 <string notr="true">font-size: 14pt;
-color: silver;
-padding: 3px;</string>
+                 <string notr="true"/>
                 </property>
                 <property name="text">
                  <string>Expert Mode</string>
                 </property>
                 <property name="icon">
                  <iconset resource="resources.qrc">
-                  <normaloff>:/resources/ic_bubble_chart_white_48dp.png</normaloff>:/resources/ic_bubble_chart_white_48dp.png</iconset>
+                  <normaloff>:/resources/ic_bubble_chart_black_48dp.png</normaloff>:/resources/ic_bubble_chart_black_48dp.png</iconset>
                 </property>
                </widget>
               </item>
               <item>
                <widget class="QPushButton" name="simpleInterfacePushButton">
                 <property name="styleSheet">
-                 <string notr="true">font-size: 14pt;
-color: silver;
-padding: 3px;</string>
+                 <string notr="true"/>
                 </property>
                 <property name="text">
                  <string>Simple Interface</string>
                 </property>
                 <property name="icon">
                  <iconset resource="resources.qrc">
-                  <normaloff>:/resources/ic_fiber_manual_record_white_48dp.png</normaloff>:/resources/ic_fiber_manual_record_white_48dp.png</iconset>
+                  <normaloff>:/resources/ic_fiber_manual_record_black_48dp.png</normaloff>:/resources/ic_fiber_manual_record_black_48dp.png</iconset>
                 </property>
                </widget>
               </item>
              </layout>
             </widget>
            </item>
-           <item>
-            <spacer name="verticalSpacer">
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>20</width>
-               <height>40</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
           </layout>
          </widget>
         </item>
         <item>
          <widget class="QListWidget" name="foldersListWidget">
+          <property name="styleSheet">
+           <string notr="true">text-align: right;</string>
+          </property>
           <property name="verticalScrollBarPolicy">
            <enum>Qt::ScrollBarAlwaysOff</enum>
           </property>
@@ -458,10 +479,19 @@ padding: 3px;</string>
            <item>
             <widget class="QLabel" name="scanCompletedLabel">
              <property name="styleSheet">
-              <string notr="true">font-size: 24px;</string>
+              <string notr="true">font-size: 24px;
+min-height: 250px;
+border: 1px solid grey;
+border-width: 1px 2px 1px 10px;
+padding: 0 15px;
+min-width: 300px;
+border-top-right-radius: 0;
+border-bottom-right-radius: 30px;
+background-color: rgba(255,255,255,0.4);
+</string>
              </property>
              <property name="text">
-              <string>TextLabel</string>
+              <string>TextLabel ...</string>
              </property>
             </widget>
            </item>
@@ -484,16 +514,21 @@ padding: 3px;</string>
            <item alignment="Qt::AlignRight">
             <widget class="QPushButton" name="runAnotherScanButton">
              <property name="styleSheet">
-              <string notr="true">font-size: 14pt;
-color: silver;
-padding: 3px;</string>
+              <string notr="true">QPushButton{
+width: 130px;
+border: 1px solid grey;
+border-width: 1px 2px 1px 4px;
+border-radius:  17px;
+border-top-right-radius: 0px;
+background-color: rgba(255,255,255,0.4);
+}</string>
              </property>
              <property name="text">
               <string>Run another scan</string>
              </property>
              <property name="icon">
               <iconset resource="resources.qrc">
-               <normaloff>:/resources/ic_arrow_back_white_48dp.png</normaloff>:/resources/ic_arrow_back_white_48dp.png</iconset>
+               <normaloff>:/resources/ic_arrow_back_black_48dp.png</normaloff>:/resources/ic_arrow_back_black_48dp.png</iconset>
              </property>
             </widget>
            </item>

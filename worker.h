@@ -11,27 +11,16 @@ class Worker : public QObject
     Q_OBJECT
 
 public:
-    Worker()
-    {
-        mIsCancelled = false;
-    }
-    ~Worker(){}
+    Worker();
+    ~Worker();
 
 
 public slots:
-    bool isCancelled(){
-        return mIsCancelled;
-    }
+    bool isCancelled();
 
-    void clearIsCancel(){
-        mIsCancelled = false;
-        emit clearCancel();
-    }
+    void clearIsCancel();
 
-    void setIsCancelled(){
-        mIsCancelled = true;
-        emit workCancelled();
-    }
+    void setIsCancelled();
 
 signals:
     void clearCancel();

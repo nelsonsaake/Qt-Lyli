@@ -9,8 +9,7 @@ struct FolderInfo
 {
     QString path;
 
-    FolderInfo(QString path="")
-        :path(path){}
+    FolderInfo(QString path="");
 };
 
 #endif // FOLDERNAME_H

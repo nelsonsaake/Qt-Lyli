@@ -10,8 +10,7 @@ struct FileInfo
     QString oldName;
     QString newName;
 
-    FileInfo(QString oldName="", QString newName="")
-        :oldName(oldName), newName(newName){}
+    FileInfo(QString oldName="", QString newName="");
 
 };
 
