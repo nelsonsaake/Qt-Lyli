@@ -10,7 +10,9 @@
 
 class Ticker: public QObject
 {
+
     Q_OBJECT
+
 public:
     Ticker(int duration=100, int value=1, int delay=0);
 

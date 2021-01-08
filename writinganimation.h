@@ -7,9 +7,13 @@
 #include <QObject>
 #include <QDebug>
 
+
+
 class WritingAnimation : public QObject
 {
+
     Q_OBJECT
+
 public:
     WritingAnimation(int duration = 1000, QString text="");
 
@@ -21,7 +25,9 @@ private slots:
 
 signals:
     void started();
+
     void update(QString nxt);
+
     void finished();
 
 private:

@@ -14,6 +14,7 @@ SOURCES += \
     filerenamer.cpp \
     folderinfo.cpp \
     folderscanner.cpp \
+    lyli.cpp \
     main.cpp \
     mainwindow.cpp \
     ticker.cpp \
@@ -26,6 +27,7 @@ HEADERS += \
     filerenamer.h \
     folderinfo.h \
     folderscanner.h \
+    lyli.h \
     mainwindow.h \
     ticker.h \
     worker.h \

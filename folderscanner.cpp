@@ -4,11 +4,54 @@
 
 FolderScanner::FolderScanner() {}
 
-bool FolderScanner::hasNext(){
+QVector<FolderInfo> FolderScanner::getSubFolders(const QDir &dir)
+{
+    //  return the list of folders in this folder
+
+    if(!dir.exists()) {
+        handleFolderDoesNotExist(dir);
+        return {};
+    }
+
+    QList<QFileInfo> dirSubFolders = dir.entryInfoList({}, QDir::Dirs | QDir::NoDotAndDotDot | QDir::NoSymLinks);
+    QVector<FolderInfo> folders = toFolderInfoVector(dirSubFolders);
+
+    return folders;
+}
+
+QVector<FileInfo> FolderScanner::getCorruptedFiles(const QDir &dir)
+{
+    // return the list of files in this folder ending with .lyli
+
+    QString lyli = ".lyli"; // the type of files we are looking for
+    QString lyliExtension = "*" + lyli;
+    QStringList nameFilter{lyliExtension};
+
+    if(!dir.exists()) {
+        handleFolderDoesNotExist(dir);
+        return {};
+    }
+
+    QList<QFileInfo> dirFiles = dir.entryInfoList(nameFilter, QDir::Files);
+    QVector<FileInfo> files = toFileInfoVector(dirFiles);
+
+    return files;
+}
+
+
+bool FolderScanner::hasNext()
+{
+    // bool = true, if workload is not empty
+
     return !folders.isEmpty();
 }
 
-FolderInfo FolderScanner::next(){
+FolderInfo FolderScanner::next()
+{
+    // take the first folder from workload
+    // delete it from workload
+    // return the folder
+
     FolderInfo folder;
     if(hasNext()){
         folder=folders.first();
@@ -17,71 +60,75 @@ FolderInfo FolderScanner::next(){
     return folder;
 }
 
-void FolderScanner::newWorkLoad(QVector<FolderInfo> folders){
+void FolderScanner::newWorkLoad(QVector<FolderInfo> folders)
+{
+    // add folders to current workload
+
     this->folders << folders;
 }
 
-void FolderScanner::scanFolder(FolderInfo folder){
+void FolderScanner::newResults(QVector<FileInfo> files)
+{
+    // add new corrupted files found to the list of corrupted files
+    // list of corrupted files part of state of object
 
-    QString path = folder.path;
-    QDir dir(path);
-    QList<QFileInfo> dirFiles;
-    QList<QFileInfo> dirSubFolders;
+    this->corruptedFiles << files;
+}
 
-    QString lyli = ".lyli"; // the type of files we are looking for
-    QString lyliExtension = "*" + lyli;
-    QStringList nameFilter{lyliExtension};
+void FolderScanner::scanFolder(FolderInfo folder)
+{
+    // scans this single folder
+
+    QDir dir(folder.path);
 
     if(!dir.exists()) {
-        qDebug() << "Error extracting targets from directory: " << path << " provided doesnot exist";
+        handleFolderDoesNotExist(dir);
         return;
     }
 
-    dirFiles = dir.entryInfoList(nameFilter, QDir::Files);
-    dirSubFolders = dir.entryInfoList({}, QDir::Dirs | QDir::NoDotAndDotDot | QDir::NoSymLinks);
+    QVector<FileInfo> files = getCorruptedFiles(dir);
+    QVector<FolderInfo> folders = getSubFolders(dir);
 
-    QVector<FileInfo> files;
-    QVector<FolderInfo> folders;
-
-    for(QFileInfo dirFile: dirFiles){
-        QString oldName = dirFile.filePath();
-        QString newName = dirFile.filePath().replace(lyli, "");
-        files << FileInfo{oldName, newName};
-    }
-    for(QFileInfo dirSubFolder: dirSubFolders){
-        folders << FolderInfo{dirSubFolder.filePath()};
-    }
-
-    if(!files.isEmpty()) this->files << files;
+    if(!files.isEmpty()) newResults(files);
     if(!folders.isEmpty()) newWorkLoad(folders);
     emit folderScanned(folder);
 }
 
-void FolderScanner::wrapup(){
+void FolderScanner::wrapup()
+{
+    // handle after scan operation
+    // send work finished signal
+    // send corruptedFilesFound signal
 
-    // if we exit by cancelling
-    // we don't want to send any futher signals
-    // that might indicate that everything is going on as usually
+    // if we are wrapping up because cancelled is called
+    // we don't want to do anything else
     if(isCancelled()) return;
 
     // let anyone concerned know work is finished
     emit workFinished();
 
     // pass on results from work done
-    emit renameBatch(files);
+    emit corruptedFilesFound(corruptedFiles);
 }
 
-void FolderScanner::scan(){
-
-    // we work and break periodically so the eventloop
-    // can handle signals coming in and other events
+void FolderScanner::scan()
+{
+    // scan the entire workload
+    // this function is also cancel cooperative
+    // checks if cancel is called periodically and handles it
 
     QEventLoop eventLoop;
     while(hasNext()){
         for(int i=0; i<50 && hasNext(); i++){
-            if(isCancelled()) return;
+            if(isCancelled()) {
+                dumpCurrentWorkLoad();
+                return;
+            }
             scanFolder(next());
         }
+
+        // we work and break periodically so the eventloop
+        // can handle signals coming in and other events
         eventLoop.processEvents();
     }
 
@@ -89,17 +136,51 @@ void FolderScanner::scan(){
     if(!hasNext()) wrapup();
 }
 
-void FolderScanner::onScanBatch(QVector<FolderInfo> folders){
+void FolderScanner::dumpCurrentWorkLoad()
+{
+    // delete workload AKA list of folders to be scanned
+    // delete files found durring the scan AKA corrupted files
+
+    folders.clear();
+    corruptedFiles.clear();
+}
+
+void FolderScanner::handleFolderDoesNotExist(QDir dir)
+{
+    // check if folder does not exist
+    // if folder doesnot exist show and error
+
+    if(!dir.exists()) {
+        qDebug() << "Error extracting targets from directory: "
+                 << dir.path() << " provided doesnot exist";
+        return;
+    }
+}
+
+
+void FolderScanner::onScanBatch(QVector<FolderInfo> folders)
+{
+    // add folders to current workload
+    // scan the entire workload
+
     newWorkLoad(folders);
     scan();
 }
 
-void FolderScanner::onPrepForWork(){
-    this->folders.clear();
+void FolderScanner::onPrepForWork()
+{
+    // delete current workload
+    // clear cancel state
+
+    dumpCurrentWorkLoad();
     clearIsCancel();
 }
 
-void FolderScanner::onCancelled(){
-    folders.clear();
+void FolderScanner::onCancelled()
+{
+    // delete current workload
+    // set cancel state, cancel == true
+
+    dumpCurrentWorkLoad();
     setIsCancelled();
 }

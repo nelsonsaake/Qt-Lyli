@@ -23,6 +23,7 @@ QT_END_NAMESPACE
 
 class MainWindow : public QMainWindow
 {
+
     Q_OBJECT
 
     enum Mode{SimpleInterface, ExpertMode, ScanningMode, CancelMode=ScanningMode, FinishedMode};
@@ -33,39 +34,70 @@ public:
     ~MainWindow();
 
 private:
-    void showMessageOnStatus(QString message);
+    void getUiHandles();
+
+    void init();
+
     void setup();
+
+
+    void showMessageOnStatus(QString message);
+
     void startLiveGif();
-    void expertMode();
-    void simpleInterface();
-    void scanningMode();
-    void returnToPreviousMode();
+
     void clearUi();
+
     void clearState();
-    void hideStateModeWidgets();
+
+    void hideModeWidgets();
+
     void changeMode(Mode mode);
+
     void gotoPage(Page page);
-    void finishViewLiveAnimation();
+
+    void prepForScan();
 
 private slots:
     void on_showNextUiUpdate();
+
     void on_browsePushButton_clicked();
+
     void on_cancelPushButton_clicked();
+
     void on_expertModePushButton_clicked();
+
     void on_simpleInterfacePushButton_clicked();
+
     void on_scanPushButton_clicked();
+
     void on_expertModeScanPushButton_clicked();
+
     void on_runAnotherScanButton_clicked();
+
+protected slots:
+    void expertMode();
+
+    void simpleInterface();
+
+    void scanningMode();
+
+    void returnToPreviousMode();
 
 public slots:
     void onFolderScanned(FolderInfo scannedFolder);
+
     void onFileRenamed(FileInfo renameFile);
+
     void onAllFinished();
 
 signals:
+
     void scanFolder(QVector<FolderInfo> folders);
+
     void triggerTicker();
+
     void prepForWork();
+
     void cancelled();
 
 private:
@@ -86,7 +118,6 @@ private:
     QWidget *folderInputArea;
     QPushButton *browseButton;
     QLabel *scanCompletedLabel;
-    QGraphicsView *graphicsView;
 
     QMovie *liveGif;
 

@@ -13,7 +13,6 @@
  * The value starts from zero, the end value is given
  * The step is also given, that by how much the value is increase at a single instance
 */
-
 class CountUpAnimation: public QObject
 {
 
