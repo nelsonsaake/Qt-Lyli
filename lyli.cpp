@@ -1,6 +1,9 @@
 #include "lyli.h"
 
-Lyli::Lyli(){
+Lyli::Lyli()
+{
+    // setup the app and connect objects
+
     registerMetaTypes();
     enable_prepingForWork();
     enable_cancellingWork();
@@ -8,25 +11,35 @@ Lyli::Lyli(){
     enable_uiTaskingFolderScanning();
     enable_workFinishedNoifications();
     enable_folderScannerSharingCorruptedFiles();
-    moveWorkerToTheirThreads();
+    moveWorkersToTheirThreads();
 }
 
-void Lyli::start(){
+void Lyli::start()
+{
+    // show ui
+
     w.show();
 }
 
-void Lyli::stop(){
+void Lyli::stop()
+{
+    // stop all threads
+
     stopWorkerThreads();
 }
 
+
 //
-void Lyli::moveWorkerToTheirThreads(){
+void Lyli::moveWorkersToTheirThreads()
+{
+    // move objects to their threads
 
     folderScanner.moveToThread(&scanningThread);
     fileRenamer.moveToThread(&renamingThread);
 }
 
-void Lyli::startWorkerThreads(){
+void Lyli::startWorkerThreads()
+{
 
     scanningThread.start();
     renamingThread.start();
