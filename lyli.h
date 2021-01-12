@@ -12,7 +12,7 @@
  *
  * Lyli manages the app components:
  * ui,
- * folder scanner and it's threads,
+ * folder scanner and it's thread,
  * file renamer and it's thread,
  *
  * connects component so the can talk to each other
@@ -26,28 +26,11 @@ public:
     Lyli();
 
     // clean up
-    ~Lyli()
-    {
-        // make sure threads stop
-        if(renamingThread.isRunning()){
-            stopWorkerThreads();
-        }
-
-        // delete all objects
-        w.deleteLater();
-        folderScanner.deleteLater();
-        fileRenamer.deleteLater();
-        scanningThread.deleteLater();
-        renamingThread.deleteLater();
-    }
+    ~Lyli();
 
     // start app
     // mainly show ui
     void start();
-
-    // stop app
-    // mainly stop working thread
-    void stop();
 
 protected:
     // move workes to their threads

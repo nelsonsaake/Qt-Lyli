@@ -19,7 +19,7 @@ QVector<FolderInfo> toFolderInfoVector(const QFileInfoList &qFileInfoList)
 
     QVector<FolderInfo> folders;
     for(QFileInfo fileInfo: qFileInfoList){
-        folders << FolderInfo{fileInfo.path()};
+        folders << FolderInfo{fileInfo.filePath()};
     }
     return folders;
 }
