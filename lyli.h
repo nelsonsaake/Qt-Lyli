@@ -70,7 +70,7 @@ protected:
 
 private:
     // ui
-    MainWindow w;
+    MainWindow mainWindow;
 
     // folder scanner object
     FolderScanner folderScanner;

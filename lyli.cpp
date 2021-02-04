@@ -25,7 +25,7 @@ void Lyli::start()
     // show ui
 
     startWorkerThreads();
-    w.show();
+    mainWindow.show();
 }
 
 void Lyli::moveWorkersToTheirThreads()
@@ -78,12 +78,12 @@ void Lyli::enable_prepingForWork()
     // send prepForWork signal to
     // folderScanner and fileRenamer
 
-    QObject::connect(&w,
+    QObject::connect(&mainWindow,
                      &MainWindow::prepForWork,
                      &folderScanner,
                      &FolderScanner::onPrepForWork);
 
-    QObject::connect(&w,
+    QObject::connect(&mainWindow,
                      &MainWindow::prepForWork,
                      &fileRenamer,
                      &FileRenamer::onPrepForWork);
@@ -95,34 +95,37 @@ void Lyli::enable_cancellingWork()
     // send cancel signal to workers
     // workers = fileRenamer & folderScanner
 
-    QObject::connect(&w,
+    QObject::connect(&mainWindow,
                      &MainWindow::cancelled,
                      &fileRenamer,
                      &FileRenamer::setIsCancelled);
 
-    QObject::connect(&w,
+    QObject::connect(&mainWindow,
                      &MainWindow::cancelled,
                      &folderScanner,
                      &FolderScanner::onCancelled);
+
+//    QObject::connect(&mainWindow,
+//                     SIGNAL(cancelled()),
+//                     &folderScanner,
+//                     SLOT(onCancelled()));
 }
 
 void Lyli::enable_uiUpdates()
 {
     // this connection will enable:
-    // 1. fileRenamer to notify the ui when it renames
-    // a file
-    // 2. folderScanner to notigy the ui when it scans
-    // a folder
+    // 1. fileRenamer to notify the ui when it renames a file
+    // 2. folderScanner to notigy the ui when it scans a folder
 
 
     QObject::connect(&fileRenamer,
                      &FileRenamer::fileRenamed,
-                     &w,
+                     &mainWindow,
                      &MainWindow::onFileRenamed);
 
     QObject::connect(&folderScanner,
                      &FolderScanner::folderScanned,
-                     &w,
+                     &mainWindow,
                      &MainWindow::onFolderScanned);
 }
 
@@ -131,7 +134,7 @@ void Lyli::enable_uiTaskingFolderScanning()
     // this connection will enable the ui to
     // give a list of folders to folderScanner to scan
 
-    QObject::connect(&w,
+    QObject::connect(&mainWindow,
                      &MainWindow::scanFolder,
                      &folderScanner,
                      &FolderScanner::onScanBatch);
@@ -172,6 +175,6 @@ void Lyli::enable_workFinishedNoifications()
 
     QObject::connect(&fileRenamer,
                      &FileRenamer::allFinished,
-                     &w,
+                     &mainWindow,
                      &MainWindow::onAllFinished);
 }
